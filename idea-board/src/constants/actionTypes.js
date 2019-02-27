@@ -1,0 +1,4 @@
+// Data Fetching
+export const GET_DATA_FULFILLED = 'GET_DATA_FULFILLED';
+export const GET_DATA_REQUESTED = 'GET_DATA_REQUESTED';
+export const GET_DATA_REJECTED = 'GET_DATA_REJECTED';

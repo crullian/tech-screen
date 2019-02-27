@@ -1,0 +1,60 @@
+.App  {
+
+}
+
+.App-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  height: 60px;
+  width: 100%;
+  border-bottom: 1px solid rgb(239, 239, 239);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+
+.App-header-container {
+	width: 100%;
+  margin: 0 20px;
+}
+
+.App-section {
+	display: flex;
+	flex-flow: wrap;
+	width: 100%;
+	text-align: center;
+}
+
+.App-section h3 {
+	width: 100%;
+	padding: 0 10px;
+}
+
+.App-fab {
+  z-index: 1200;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1200;
+}
+
+@media (min-width: 576px) {
+	.App-section {
+		width: 300px;
+		margin: auto;
+	}
+}
+
+@media (min-width: 768px) {
+	.App-section {
+		width: 642px;
+	}
+}
+
+@media (min-width: 992px) {
+	.App-section {
+		width: 960px;
+	}
+}
