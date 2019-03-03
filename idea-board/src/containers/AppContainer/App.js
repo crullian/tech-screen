@@ -5,6 +5,7 @@ import * as dataActions from '../../actions/dataActions';
 
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Toggle from 'material-ui/Toggle';
 
 import AddIdeaDialog from '../../components/AddIdeaDialog/AddIdeaDialog';
 import Idea from '../../components/Idea/Idea';
@@ -13,39 +14,43 @@ import './App.css';
 
 class App extends Component {
 	state = {
-		isAddIdeaDialogOpen: false
+		isAddIdeaDialogOpen: false,
+    shouldSortByTitle: false
 	}
 
 	componentDidMount() {
-		// Seed localStorage:
-		// const ideas = {
-		// 	'1': {
-		// 		id: 1,
-		// 		title: 'title',
-		// 		description: 'description string, up to 140 characters',
-		// 		createdAt: Date.now(),
-		// 		updatedAt: Date.now()
-		// 	},
-		// 	'2': {
-		// 		id: 2,
-		// 		title: 'title',
-		// 		description: 'LALALALALALAAL',
-		// 		createdAt: Date.now(),
-		// 		updatedAt: Date.now()
-		// 	},
-		// 	'3': {
-		// 		id: 3,
-		// 		title: 'title',
-		// 		description: 'Lorem ipsum yeah cool cool...',
-		// 		createdAt: Date.now(),
-		// 		updatedAt: Date.now()
-		// 	},
-		// }
-
-		// localStorage.setItem('ideas', JSON.stringify(ideas));
+    // this.seedLocalStorage();
 
 		this.props.actions.getIdeas();
 	}
+
+  seedLocalStorage = () => {
+    const ideas = {
+      '1': {
+        id: 1,
+        title: 'title',
+        description: 'description string, up to 140 characters',
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      },
+      '2': {
+        id: 2,
+        title: 'title',
+        description: 'LALALALALALAAL',
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      },
+      '3': {
+        id: 3,
+        title: 'title',
+        description: 'Lorem ipsum yeah cool cool...',
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      },
+    }
+
+    localStorage.setItem('ideas', JSON.stringify(ideas));
+  }
 
 	handleOpenDialog = () => {
     this.setState({isAddIdeaDialogOpen: true});
@@ -69,11 +74,33 @@ class App extends Component {
 		this.props.actions.setIdea(title, description);
 	}
 
+  handleToggleSortByTitle = () => {
+    this.setState({shouldSortByTitle: !this.state.shouldSortByTitle})
+  }
+
+  sortByTitle = (a, b) => {
+    var textA = a.title.toUpperCase();
+    var textB = b.title.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+  }
+
+  sortByCreatedAt = (a, b) => {
+    var timeA = a.createdAt;
+    var timeB = b.createdAt;
+    return (timeA < timeB) ? -1 : (timeA > timeB) ? 1 : 0;
+  }
+
   render() {
   	const { ideas } = this.props;
 
   	let mainSection = null
   	if (ideas && ideas.length) {
+      if (this.state.shouldSortByTitle) {
+        console.log('shouldSortByTitle')
+        ideas.sort(this.sortByTitle);
+      } else {
+        ideas.sort(this.sortByCreatedAt);
+      }
   		mainSection = ideas.map((idea, i) => (
   			<Idea
   				key={idea.id}
@@ -94,6 +121,16 @@ class App extends Component {
       	<header className="App-header">
           <div className="App-header-container">
             <h3>Idea Board</h3>
+            <Toggle
+              label="Sort by title"
+              labelPosition="right"
+              style={{
+                margin: '1em 0',
+                width: '130px'
+              }}
+              toggled={this.state.shouldSortByTitle}
+              onToggle={this.handleToggleSortByTitle}
+            />
           </div>
         </header>
 
