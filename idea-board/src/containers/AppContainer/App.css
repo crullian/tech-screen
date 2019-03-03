@@ -18,6 +18,8 @@
 .App-header-container {
 	width: 100%;
   margin: 0 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .App-section {
