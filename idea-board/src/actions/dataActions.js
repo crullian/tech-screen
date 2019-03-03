@@ -18,7 +18,7 @@ export function getIdeas() {
 
 export function setIdea(title, description) {
   const ideas = JSON.parse(localStorage.getItem('ideas')) || {};
-  let newObjIndex = ideas && Object.keys(ideas).length ? Object.keys(ideas).length +1 : 1;
+  let newObjIndex = '_' + Math.random().toString(36).substr(2, 9);;
   ideas[newObjIndex] = {};
   ideas[newObjIndex]['id'] = newObjIndex;
   ideas[newObjIndex]['title'] = title;

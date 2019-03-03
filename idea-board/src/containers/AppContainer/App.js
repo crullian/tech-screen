@@ -76,7 +76,7 @@ class App extends Component {
   	if (ideas && ideas.length) {
   		mainSection = ideas.map((idea, i) => (
   			<Idea
-  				key={`idea-${idea.id}`}
+  				key={idea.id}
   				idea={idea}
   				handleUpdateIdea={this.updateIdea}
   				handleDeleteIdea={this.deleteIdea}
