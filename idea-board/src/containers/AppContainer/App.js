@@ -90,31 +90,34 @@ class App extends Component {
     return (timeA < timeB) ? -1 : (timeA > timeB) ? 1 : 0;
   }
 
-  render() {
-  	const { ideas } = this.props;
-
-  	let mainSection = null
-  	if (ideas && ideas.length) {
+  renderMainSection = () => {
+    const { ideas } = this.props;
+    let mainSection = null
+    if (ideas && ideas.length) {
       if (this.state.shouldSortByTitle) {
-        console.log('shouldSortByTitle')
         ideas.sort(this.sortByTitle);
       } else {
         ideas.sort(this.sortByCreatedAt);
       }
-  		mainSection = ideas.map((idea, i) => (
-  			<Idea
-  				key={idea.id}
-  				idea={idea}
-  				handleUpdateIdea={this.updateIdea}
-  				handleDeleteIdea={this.deleteIdea}
-				/>
-    	))
-  	} else {
-  		mainSection = (
-				<h3>Please add some ideas to your idea board with the button below :)</h3>
-			);
-  	}
+      
+      mainSection = ideas.map((idea, i) => (
+        <Idea
+          key={idea.id}
+          idea={idea}
+          handleUpdateIdea={this.updateIdea}
+          handleDeleteIdea={this.deleteIdea}
+        />
+      ))
+    } else {
+      mainSection = (
+        <h3>Please add some ideas to your idea board with the button below :)</h3>
+      );
+    }
 
+    return mainSection;
+  }
+
+  render() {
     return (
       <div className="App">
 
@@ -135,7 +138,7 @@ class App extends Component {
         </header>
 
         <section className="App-section">
-        	{ mainSection }
+        	{ this.renderMainSection() }
       	</section>
 
       	<FloatingActionButton className="App-fab" onClick={this.handleOpenDialog}>
